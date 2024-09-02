@@ -1,0 +1,1 @@
+/home/loki/programs/rust/h-projects/mpsc-channels/target/debug/channels: /home/loki/programs/rust/h-projects/mpsc-channels/src/channel.rs /home/loki/programs/rust/h-projects/mpsc-channels/src/dequeue.rs /home/loki/programs/rust/h-projects/mpsc-channels/src/main.rs
