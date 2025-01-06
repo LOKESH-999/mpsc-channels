@@ -1,5 +1,7 @@
 mod channel;
 mod dequeue;
+mod new_chanel;
+mod mpsc;
 // use std::sync::{mpsc};
 use channel::Channel;
 use std::collections::VecDeque;
@@ -8,7 +10,7 @@ use std::thread;
 use std::time::Duration;
 
 fn main() {
-    let (sender, receiver) = Channel::new();
+    let (sender, receiver) = mpsc::new();
 
     // Create an Arc to share the Sender among threads
     let sender = Arc::new(sender);
@@ -42,7 +44,7 @@ fn main() {
         println!("{:?}",78);
         // Allow some time for producers to send data
         thread::sleep(Duration::from_secs(1));
-        unsafe {while receiver.is_available() {}}
+        // unsafe {while receiver.is_available() {}}
         while let Some(data) = receiver.read() {
             println!("Consumer received data: {}", data);
         }
