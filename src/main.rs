@@ -2,8 +2,6 @@ mod channel;
 mod dequeue;
 mod new_chanel;
 mod mpsc;
-// use std::sync::{mpsc};
-use channel::Channel;
 use std::collections::VecDeque;
 use std::sync::{Arc, Barrier};
 use std::thread;
@@ -63,4 +61,31 @@ fn main() {
     }
     // Wait for the consumer thread to finish
     consumer_handle.join().unwrap();
+}
+
+
+
+#[test]
+fn test_sender_recieve() {
+    // Create a new channel.
+    let (sender, reciever) = mpsc::new();
+
+    // Test sending and receiving data within the same thread.
+    sender.send(42);
+    assert_eq!(reciever.read(), Some(42));
+
+    sender.send(100);
+    assert_eq!(reciever.read(), Some(100));
+
+    // Test receiving from an empty channel.
+    assert_eq!(reciever.read(), None);
+
+    // Test sending and receiving across threads.
+    let sender_clone = sender.clone();
+    let handle = thread::spawn(move || {
+        sender_clone.send(99);
+    });
+
+    handle.join().unwrap();
+    assert_eq!(reciever.read(), Some(99));
 }
