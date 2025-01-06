@@ -1,3 +1,6 @@
+./.gitignore
+./cargo.lock
+./target
 ./New folder.zip
 ./src/channels.rs
 ./src/dequeue.rs
